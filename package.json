@@ -1,0 +1,27 @@
+{
+  "name": "tic-tac-toe",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch:css": "npx @tailwindcss/cli -i ./src/css/input.css -o ./dist/output.css --watch",
+    "build:css": "npx @tailwindcss/cli -i src/css/input.css -o dist/output.css --minify"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tulin404/tic-tac-toe.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tulin404/tic-tac-toe/issues"
+  },
+  "homepage": "https://github.com/tulin404/tic-tac-toe#readme",
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.1.18",
+    "autoprefixer": "^10.4.23",
+    "tailwindcss": "^4.1.18"
+  }
+}
