@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+@theme {
+    --color-primary: oklch(0.25 0.0749 260.78);
+    --color-secondary: oklch(1 0.0045 258.32);
+}
+
+@utility board-sizing {
+    @apply flex justify-center items-center size-full py-[30%]
+}
+
+/* USING THE LONG WAY SINCE I WANT ROUNDED BORDERS */
+@utility side-borders {
+    position: relative;
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        background: var(--color-secondary);
+    }
+}
+
+@utility side-borders-bottom {
+    &::before,
+    &::after {
+        height: 100%;
+        width: 4px;
+    }
+    &::before {
+        left: 0;
+    }
+    &::after {
+        right: 0;
+    }
+}
+@utility side-borders-top {
+    &::before,
+    &::after {
+        height: 100%;
+        width: 4px;
+    }
+    &::before {
+        left: 0;
+    }
+    &::after {
+        right: 0;
+    }
+}
+
+@utility side-borders-bottom {
+    &::before,
+    &::after {
+        border-radius: 0 0 4px 4px;
+    }
+}
+@utility side-borders-top {
+    &::before,
+    &::after {
+        border-radius: 4px 4px 0 0;
+    }
+}
