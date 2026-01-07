@@ -6,8 +6,12 @@
 }
 
 @utility board-sizing {
-    @apply flex justify-center items-center size-full py-[30%]
+    @apply flex justify-center items-center size-full py-16
 }
+
+.board-sizing > img {
+    height: 48px;
+};
 
 /* USING THE LONG WAY SINCE I WANT ROUNDED BORDERS */
 @utility side-borders {
@@ -24,7 +28,8 @@
     &::before,
     &::after {
         height: 100%;
-        width: 4px;
+        width: 8px;
+        border-radius: 0 0 4px 4px;
     }
     &::before {
         left: 0;
@@ -37,7 +42,8 @@
     &::before,
     &::after {
         height: 100%;
-        width: 4px;
+        width: 8px;
+        border-radius: 4px 4px 0 0;
     }
     &::before {
         left: 0;
@@ -47,15 +53,31 @@
     }
 }
 
-@utility side-borders-bottom {
+@utility side-borders-right {
     &::before,
     &::after {
-        border-radius: 0 0 4px 4px;
+        height: 8px;
+        width: 100%;
+        border-radius: 4px 0 0 4px;
+    }
+    &::before {
+        top: 0;
+    }
+    &::after {
+        bottom: 0;
     }
 }
-@utility side-borders-top {
+@utility side-borders-left {
     &::before,
     &::after {
-        border-radius: 4px 4px 0 0;
+        height: 8px;
+        width: 100%;
+        border-radius: 0 4px 4px 0;
+    }
+    &::before {
+        top: 0;
+    }
+    &::after {
+        bottom: 0;
     }
 }
