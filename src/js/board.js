@@ -6,6 +6,11 @@ export function Board() {
     board3, board4, board5,
     board6, board7, board8] = gameBoardPositions;
 
+    const winningPossibilities = [
+        [board0, board1, board2], [board3, board4, board5], [board6, board7, board8],
+        [board0, board3, board6], [board1, board4, board7], [board2, board5, board8],
+        [board0, board4, board8], [board2, board4, board6]
+    ];
     const X = 'public/cross.png';
     const O = 'public/circle.png';
 
@@ -16,9 +21,18 @@ export function Board() {
         getO() {
             return O;
         },
+        getGameBoard() {
+            return gameBoardPositions;
+        },
+        getWinningPoss() {
+            return winningPossibilities;
+        },
         changeTo(boardPosition, element) {
-            const targetElement = gameBoardPositions.find(element => element == boardPosition);
-            const image = targetElement.querySelector('img');
+            let image = boardPosition.querySelector('img');
+            if (!image) {
+                image = document.createElement('img');
+                boardPosition.appendChild(image);
+            };
             image.src = element;
         }
     };
