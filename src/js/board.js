@@ -28,12 +28,13 @@ export function Board() {
             return winningPossibilities;
         },
         changeTo(boardPosition, element) {
-            let image = boardPosition.querySelector('img');
-            if (!image) {
-                image = document.createElement('img');
-                boardPosition.appendChild(image);
+            console.log(boardPosition);
+            if (gameBoardPositions.includes(boardPosition)) {
+                const img = boardPosition.querySelector('img');
+                img.src = element;
+            } else {
+                boardPosition.src = element;
             };
-            image.src = element;
         }
     };
 };

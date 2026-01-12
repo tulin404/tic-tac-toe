@@ -3,7 +3,25 @@ const board = Board();
 
 const winningPossibilities = board.getWinningPoss();
 
-// RETURNS THE POSSIBILITIES ARRAY MAPPED (EACH ARRAY) WITH THE UNFILLED ONES
+// CHECKS IF IT IS THE BOT'S TURN
+function canBotPlay() {
+    const gameBoard = board.getGameBoard();
+    const OArray = gameBoard.filter(pos => {
+        const img = pos.querySelector('img');
+        return (img.src.includes(board.getO()));
+    });
+    const XArray = gameBoard.filter(pos => {
+        const img = pos.querySelector('img');
+        return (img.src.includes(board.getX()));
+    });
+    if (XArray.length > OArray.length) {
+        return true;
+    } else {
+        return false;
+    };
+};
+
+// RETURNS THE WIN POSSIBILITIES ARRAY MAPPED (EACH ARRAY) WITH THE UNFILLED ONES
 function checkUnfilled() {
     const unfilled = winningPossibilities.map(poss => {
         const [poss1, poss2, poss3] = poss;
@@ -12,10 +30,11 @@ function checkUnfilled() {
         const img3 = poss3.querySelector('img');
         const imgArray = [img1, img2, img3];
         const imgFiltered = imgArray.filter(img => {
-            return (img.getAttribute('src') == "");
+            return (img.src.endsWith('/'));
         });
         return imgFiltered;
     });
+    console.log(unfilled);
     return unfilled;
 };
 
@@ -24,72 +43,62 @@ function blockOpponent() {
     const unfilled = checkUnfilled();
     // REMOVE EMPTY ARRAYS
     const unfilledFilter = unfilled.filter(arr => arr.length === 1);
+    // CHOOSE THE FIRST ARRAY AND BLOCKS IT
     const chosenArray = unfilledFilter[0];
     if (chosenArray !== undefined) {
         board.changeTo(chosenArray[0], board.getO());  
     } else {
-        bestMove();
-    }
+        return
+    };
 };
 
 // HELPER (CHOOSES A RANDOM WIN CONDITION)
 function chooseRandomWinCondition() {
-    const choosenCondition = Math.floor(Math.random() * 8);
-    const choosenWin = winningPossibilities[choosenCondition];
-    return choosenWin;
+    const chosenCondition = Math.floor(Math.random() * 8);
+    const chosenWin = winningPossibilities[chosenCondition];
+    return chosenWin;
 };
 
 // HELPER (CHECKS IF ANY ELEMENT ON THE WINARRAY HAS THE ELEMENT)
-function hasElementFilledWith(winCondition, element) {
-    const [e1, e2, e3] = winCondition;
-    const e1Img = e1.querySelector('img');
-    const e2Img = e2.querySelector('img');
-    const e3Img = e3.querySelector('img');
-    if (e1Img.src == element || e2Img.src == element || e3Img.src == element) {
-        return true
-    } else {
-        return false
-    };
+function filledWith(winCondition, element, num) {
+    const filterArray = winCondition.filter(el => el.src.includes(element));
+    return (filterArray.length === num)
 };
 
-const choosenWin = chooseRandomWinCondition();
 function bestMove() {
-    if (choosenWin.length === 3) {
+    // THIS chosenWIN WILL BE DEFINED AT MAIN JS
+    let chosen = chooseRandomWinCondition();
+    let chosenWinImgs = chosen.map(pos => pos.querySelector('img'));
+    let chosenWinNullImgs = chosenWinImgs.filter(img => img.src.endsWith('/'));
+    if (chosenWinNullImgs.length === 3) {
         const index = Math.floor(Math.random() * 3);
-        const choosenSpot = choosenWin[index];
-        board.changeTo(choosenSpot, board.getO());
-    } else if (choosenWin.length === 2 && hasElementFilledWith(choosenWin, board.getO())) {
-        const unfilledInWin = choosenWin.filter(position => {
-            const image = position.querySelector('img');
-            return (image.src.endsWith('/'))
-        });
+        const chosenSpot = chosenWinNullImgs[index];
+        board.changeTo(chosenSpot, board.getO());
+    } else if (chosenWinNullImgs.length === 2 && filledWith(chosenWinImgs, board.getO(), 1)) {
         const random = Math.floor(Math.random() * 2);
-        board.changeTo(unfilledInWin[random], board.getO());
+        board.changeTo(chosenWinNullImgs[random], board.getO());
+    } else if (chosenWinNullImgs.length === 1 && filledWith(chosenWinImgs, board.getO(), 2)) {
+        board.changeTo(chosenWinNullImgs[0], board.getO());
+    } else if (chosenWinNullImgs.length === 2 && filledWith(chosenWinImgs, board.getX(), 1)) {
+        bestMove();
     } else {
-        randomMove()
+        return;
     };
 };
-
-function randomMove() {
-    const gameBoard = board.getGameBoard();
-    const random = Math.floor(Math.random() * 9);
-    board.changeTo(gameBoard[random], board.getO());
-};
-
-function AImove() {
-
-}
 
 export function AI() {
     return {
+        canBotPlay() {
+            return canBotPlay()
+        },
+        checkUnfilled() {
+            return checkUnfilled()
+        },
         blockOpponent() {
             return blockOpponent()
         },
         bestMove() {
             return bestMove()
-        },
-        randomMove() {
-            return randomMove()
         }
     };
 };
