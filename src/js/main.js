@@ -13,11 +13,9 @@ const ai = AI();
 window.addEventListener('click', (e) => {
     const targetElement = e.target;
     if (targetElement.classList.contains('board-sizing')) {
-        if (ai.canBotPlay() === true) {
             ai.blockOpponent();
             if (ai.canBotPlay()) {
-                ai.bestMove();
-            };
+            ai.bestMove();
         };
     };
 });

@@ -6,7 +6,7 @@
 }
 
 @utility board-sizing {
-    @apply flex justify-center items-center size-full py-12
+    @apply flex justify-center items-center size-full py-6 sm:py-12
 }
 
 .board-sizing > img {

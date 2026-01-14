@@ -43,6 +43,12 @@ function blockOpponent() {
     const unfilled = checkUnfilled();
     // REMOVE EMPTY ARRAYS
     const unfilledFilter = unfilled.filter(arr => arr.length === 1);
+    console.log(unfilledFilter)
+    // const unfilledFilterWithX = unfilledFilter.filter(arr => {
+    //     element = arr[0];
+    //     const img = element.querySelector('img');
+    //     return (img.src.includes(board.getX()));
+    // })
     // CHOOSE THE FIRST ARRAY AND BLOCKS IT
     const chosenArray = unfilledFilter[0];
     if (chosenArray !== undefined) {
@@ -62,12 +68,14 @@ function chooseRandomWinCondition() {
 // HELPER (CHECKS IF ANY ELEMENT ON THE WINARRAY HAS THE ELEMENT)
 function filledWith(winCondition, element, num) {
     const filterArray = winCondition.filter(el => el.src.includes(element));
-    return (filterArray.length === num)
+    return (filterArray.length === num);
 };
+
+let chosen = chooseRandomWinCondition();
+console.log(chosen);
 
 function bestMove() {
     // THIS chosenWIN WILL BE DEFINED AT MAIN JS
-    let chosen = chooseRandomWinCondition();
     let chosenWinImgs = chosen.map(pos => pos.querySelector('img'));
     let chosenWinNullImgs = chosenWinImgs.filter(img => img.src.endsWith('/'));
     if (chosenWinNullImgs.length === 3) {
@@ -80,7 +88,8 @@ function bestMove() {
     } else if (chosenWinNullImgs.length === 1 && filledWith(chosenWinImgs, board.getO(), 2)) {
         board.changeTo(chosenWinNullImgs[0], board.getO());
     } else if (chosenWinNullImgs.length === 2 && filledWith(chosenWinImgs, board.getX(), 1)) {
-        bestMove();
+        let chosen = chooseRandomWinCondition();
+        console.log('recursion');
     } else {
         return;
     };
@@ -91,8 +100,8 @@ export function AI() {
         canBotPlay() {
             return canBotPlay()
         },
-        checkUnfilled() {
-            return checkUnfilled()
+        chooseRandomWinCondition() {
+            return chooseRandomWinCondition()  
         },
         blockOpponent() {
             return blockOpponent()

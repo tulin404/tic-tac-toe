@@ -28,7 +28,6 @@ export function Board() {
             return winningPossibilities;
         },
         changeTo(boardPosition, element) {
-            console.log(boardPosition);
             if (gameBoardPositions.includes(boardPosition)) {
                 const img = boardPosition.querySelector('img');
                 img.src = element;
